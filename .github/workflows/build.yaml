@@ -1,24 +1,28 @@
-name: test
-
-on:
-  workflow_dispatch:
-    inputs:
-      env:
-        type: choice
-        options:
-          - dev
-          - prod
-
-env:
-  name_dev: scott
-  name_prod: tiger
-
+name: Gitea Actions Demo
+run-name: ${{ github.actor }} is testing out Gitea Actions 🚀
+on: [push]
 jobs:
-  build:
+  Explore-Gitea-Actions-1:
     runs-on: ubuntu-latest
-
+    container:
+      image: node:18
     steps:
-      - name: output test
+      - name: fake folder
         run: |
-          echo ${{ github.event.inputs.env }}
-          echo ${{ env[format('name_{0}', github.event.inputs.env)] }}
+          mkdir ./dist
+          echo 111 >> ./dist/111.txt          
+      - uses: actions/cache/save@v3
+        with:
+          path: ./dist
+          key: dist-${{ github.sha }}
+
+  Explore-Gitea-Actions-2:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/catthehacker/ubuntu:act-latest
+    steps:
+      - uses: actions/cache/restore@v3
+        with:
+          path: ./dist
+          key: dist-${{ github.sha }}
+          fail-on-cache-miss: true
