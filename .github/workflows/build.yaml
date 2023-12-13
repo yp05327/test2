@@ -15,6 +15,7 @@ jobs:
         with:
           path: ./dist
           key: dist-${{ github.sha }}
+          enableCrossOsArchive: true
 
   Explore-Gitea-Actions-2:
     runs-on: ubuntu-latest
