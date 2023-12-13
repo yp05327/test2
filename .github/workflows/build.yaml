@@ -26,3 +26,4 @@ jobs:
           path: ./dist
           key: dist-${{ github.sha }}
           fail-on-cache-miss: true
+          enableCrossOsArchive: true
